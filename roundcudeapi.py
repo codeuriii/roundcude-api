@@ -45,6 +45,9 @@ class RoundcudeAPI:
         self.send_keys(by.id, 'username', self.username)
         self.send_keys(by.id, 'password', self.password)
         self.click(by.id, 'valider')
+
+    def _go_home(self):
+        self.click(by.xpath, '//*[@id="rcmbtn101"]')
     
     def send_msg(self, name, object, content):
         self.click(by.xpath, '//*[@id="rcmbtn100"]')
