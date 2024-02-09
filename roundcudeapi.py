@@ -40,7 +40,7 @@ class RoundcudeAPI:
         self.find(whatby, path).send_keys(content)
 
     def login(self):
-        self.driver.get(f"https://{self.portail}/login?service=https%3A%2F%2Fportail.lyc-leverger.ac-reunion.fr%2Froundcube%2F%3F_task%3Dmail%26_action%3Dlogin")
+        self.driver.get(f"https://{self.portail}:8443/login?service=https%3A%2F%2F{self.portail}%2Froundcube%2F%3F_task%3Dmail%26_action%3Dlogin")
         self.send_keys(by.id, 'username', self.username)
         self.send_keys(by.id, 'password', self.password)
         self.click(by.id, 'valider')
