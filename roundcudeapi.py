@@ -52,3 +52,21 @@ class RoundcudeAPI:
         time.sleep(3)
         input_dest.send_keys(Keys.TAB)
         self.send_keys(by.xpath, '//*[@id="compose-subject"]', object)
+        self.driver.execute_script('''
+            var iframe = document.getElementById('composebody_ifr');
+
+            if (iframe) {
+                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                
+                if (iframeDocument) {
+                    var paragraph = iframeDocument.querySelector('p');
+                    
+                    if (paragraph) {
+                        paragraph.textContent = "x280"
+                        console.log(paragraph.innerText);
+                    }
+                }
+            }
+        '''.replace("x280", content))
+        self.click(by.xpath, '//*[@id="rcmbtn111"]')
+
