@@ -47,7 +47,8 @@ class RoundcudeAPI:
     
     def send_msg(self, name, object, content):
         self.click(by.xpath, '//*[@id="rcmbtn100"]')
-        self.send_keys(by.xpath, '//*[@id="compose_to"]/div/div/ul/li/input', name)
+        input_dest = self.find(by.xpath, '//*[@id="compose_to"]/div/div/ul/li/input')
+        input_dest.send_keys(name)
         time.sleep(3)
-        self.send_keys(by.xpath, '//*[@id="compose_to"]/div/div/ul/li/input', Keys.TAB)
+        input_dest.send_keys(Keys.TAB)
         self.send_keys(by.xpath, '//*[@id="compose-subject"]', object)
