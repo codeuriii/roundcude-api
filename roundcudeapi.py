@@ -74,3 +74,11 @@ class RoundcudeAPI:
         '''.replace("x280", content))
         self.click(by.xpath, '//*[@id="rcmbtn111"]')
 
+    def get_latest_msg(self):
+        msg_object = self.find(by.xpath, '//*[@id="rcmrowMjQ"]/td[2]')
+        msg_object.click()
+        author_element = msg_object.find_element(by.class_name, 'rcmContactAddress')
+        object_element = msg_object.find_element(by.class_name, 'subject')
+        date_element = msg_object.find_element(by.class_name, 'date')
+
+        piece_jointe_element = None
