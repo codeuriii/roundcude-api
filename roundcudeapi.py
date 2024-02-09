@@ -2,8 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 import selenium.webdriver.support.expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from myby import by
 import json
+import time
 
 
 class RoundcudeAPI:
@@ -42,4 +44,9 @@ class RoundcudeAPI:
         self.send_keys(by.id, 'password', self.password)
         self.click(by.id, 'valider')
     
-    
+    def send_msg(self, name, object, content):
+        self.click(by.xpath, '//*[@id="rcmbtn100"]')
+        self.send_keys(by.xpath, '//*[@id="compose_to"]/div/div/ul/li/input', name)
+        time.sleep(3)
+        self.send_keys(by.xpath, '//*[@id="compose_to"]/div/div/ul/li/input', Keys.TAB)
+        self.send_keys(by.xpath, '//*[@id="compose-subject"]', object)
