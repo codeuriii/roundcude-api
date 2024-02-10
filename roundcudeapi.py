@@ -75,10 +75,43 @@ class RoundcudeAPI:
         self.click(by.xpath, '//*[@id="rcmbtn111"]')
 
     def get_latest_msg(self):
-        msg_object = self.find(by.xpath, '//*[@id="rcmrowMjQ"]/td[2]')
+        data = {}
+        msg_object = self.find(by.class_name, "message")
         msg_object.click()
         author_element = msg_object.find_element(by.class_name, 'rcmContactAddress')
         object_element = msg_object.find_element(by.class_name, 'subject')
         date_element = msg_object.find_element(by.class_name, 'date')
 
-        piece_jointe_element = None
+        piece_jointe_element = msg_object.find_element(by.class_name, 'attachment')
+        innerHtml = self.driver.execute_script("return arguments[0].innerHTML", piece_jointe_element)
+        if innerHtml == '&nbsp;':
+            piece_jointe = {}
+        else:
+            time.sleep(2)
+            someone = self.driver.execute_script('''
+                var iframe = document.getElementById('messagecontframe');
+
+                if (iframe) {
+                    var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    if (iframeDocument) {
+                        var name = iframeDocument.querySelector('span.attachment-name').textContent;
+                        var size = iframeDocument.querySelector('span.attachment-size').textContent;
+                        var path = iframeDocument.querySelector('a.filename').getAttribute("href")
+                        return [name, size, path]
+                    }
+                }
+            ''')
+            piece_jointe = {
+                "name": someone[0],
+                "size": someone[1].removeprefix("(").removeprefix('~').removesuffix(")"),
+                "path": self.driver.current_url.split("?")[0] + someone[2].removeprefix("./")
+            }
+        
+        data["author"] = author_element.text
+        data["object"] = object_element.text.split("\n")[-1]
+        data["date"] = date_element.text
+        data["piece jointe"] = piece_jointe
+
+        return data
+
