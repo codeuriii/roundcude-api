@@ -73,6 +73,7 @@ class RoundcudeAPI:
             }
         '''.replace("x280", content))
         self.click(by.xpath, '//*[@id="rcmbtn111"]')
+        time.sleep(.1)
 
     def get_latest_msg(self):
         data = {}
